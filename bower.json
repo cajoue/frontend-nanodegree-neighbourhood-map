@@ -1,0 +1,24 @@
+{
+  "name": "frontend-nanodegree-neighbourhood-map",
+  "authors": [
+    "Valerie Yallup <cajoue@users.noreply.github.com>"
+  ],
+  "description": "Neighbourhood Map project",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src/components"
+  ],
+  "dependencies": {
+    "knockout": "^3.4.0",
+    "jquery": "^2.2.4",
+    "normalize-css": "^4.1.1"
+  },
+  "private": true
+}
