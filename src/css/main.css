@@ -1,0 +1,18 @@
+/* testing - draws a border around each block */
+/** {
+    border: 1px solid red !important;
+}*/
+
+
+body, html, {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.map {
+  height: 400px;
+}
+.map-canvas {
+  height: 100%;
+}
