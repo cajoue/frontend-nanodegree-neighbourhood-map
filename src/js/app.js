@@ -23,13 +23,25 @@ var localOrbe = [
   }
 ];
 
-
-
 // simple map example from google api
 var map;
 var initMap = function () {
   map = new google.maps.Map(document.getElementById('map-canvas'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
+    center: {lat: 46.724258, lng: 6.532064},
+    zoom: 15
   });
+  setMarkers(map);
 };
+
+// add simple markers to map
+function setMarkers(map) {
+  for (var i = 0; i < localOrbe.length; i++) {
+    var poi = localOrbe[i];
+    var marker = new google.maps.Marker({
+      position: {lat: poi.location.lat, lng: poi.location.lng},
+      map: map,
+      title: poi.name
+    });
+  };
+}
+
