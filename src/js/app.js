@@ -40,6 +40,7 @@ function createMarker(poi) {
     title: poi.name,
     map: map
   });
+
   marker.addListener('click', function() {
     setInfoWindow(map, marker, poi);
   });
@@ -53,6 +54,8 @@ function setMarkers(locations) {
 }
 
 // add simple info window to poi marker
+// only want one info window open at a time. use global to keep track of existing window
+var infowindow;
 function setInfoWindow (map, marker, poi){
   var contentString = '<div id="content">'+
       '<div id="siteNotice">' + '</div>'+
@@ -62,7 +65,10 @@ function setInfoWindow (map, marker, poi){
       '</div>'+
       '</div>';
 
-  var infowindow = new google.maps.InfoWindow({
+  // if an open window exists, close it before making new one
+  if ( infowindow != null ) infowindow.close();
+
+  infowindow = new google.maps.InfoWindow({
     content: contentString,
     maxWidth: 200
   });
