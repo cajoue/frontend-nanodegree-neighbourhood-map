@@ -1,24 +1,29 @@
 {
   "name": "frontend-nanodegree-neighbourhood-map",
+  "description": "Neighbourhood Map project",
+  "main": "gulpfile.js",
   "authors": [
     "Valerie Yallup <cajoue@users.noreply.github.com>"
   ],
-  "description": "Neighbourhood Map project",
-  "main": "index.html",
-  "moduleType": [],
-  "license": "MIT",
+  "license": "ISC",
+  "keywords": [
+    "udacity",
+    "gulp",
+    "bower",
+    "knockoutjs"
+  ],
+  "homepage": "https://github.com/cajoue/frontend-nanodegree-neighbourhood-map",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests",
-    "src/components"
+    "tests"
   ],
   "dependencies": {
-    "knockout": "^3.4.0",
     "jquery": "^2.2.4",
-    "normalize-css": "^4.1.1"
-  },
-  "private": true
+    "normalize-css": "normalize.css#^4.1.1",
+    "knockout": "^3.4.0"
+  }
 }

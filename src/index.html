@@ -6,7 +6,10 @@
   <meta name="author" content="Valerie Yallup">
   <title>Neighbourhood Map</title>
 
+<!-- build:css css/main.min.css -->
   <link rel="stylesheet" href="css/main.css">
+<!-- endbuild -->
+
 </head>
 <body>
   <section id="map-app">
@@ -28,9 +31,13 @@
     </section>
   </section>
 
-  <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="components/js/jquery.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-  <script src="js/app.js"></script>
+
+    <!-- build:js js/app.min.js -->
+    <script type="text/javascript" src="js/app.js"></script>
+    <!-- endbuild -->
+
 </body>
 </html>
 

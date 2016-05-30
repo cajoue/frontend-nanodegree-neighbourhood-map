@@ -1,7 +1,8 @@
 .DS_Store
 node_modules/
 bower_components/
-src/components/
 notes.md
 test/
 config_settings.json
+dist/
+src/components/

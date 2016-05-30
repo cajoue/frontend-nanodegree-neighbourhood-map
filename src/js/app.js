@@ -50,7 +50,7 @@ function createMarker(poi) {
 function setMarkers(locations) {
   for (var i = 0; i < locations.length; i++) {
     createMarker(locations[i]);
-  };
+  }
 }
 
 // add simple info window to poi marker
@@ -66,7 +66,7 @@ function setInfoWindow (map, marker, poi){
       '</div>';
 
   // if an open window exists, close it before making new one
-  if ( infowindow != null ) infowindow.close();
+  if ( infowindow !== undefined ) infowindow.close();
 
   infowindow = new google.maps.InfoWindow({
     content: contentString,
