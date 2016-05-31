@@ -1,28 +1,56 @@
+//---------------------------//
+//       Configuration       //
+//---------------------------//
 var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     reload = browserSync.reload,
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     cleanCSS = require('gulp-clean-css'),
-    replace = require('gulp-html-replace'),
     sourcemap = require('gulp-sourcemaps'),
     minifyhtml = require('gulp-minify-html'),
     ghPages = require('gulp-gh-pages'),
     rename = require('gulp-rename'),
     mainBowerFiles = require('main-bower-files'),
-    flatten = require('gulp-flatten'),
     gulpFilter = require('gulp-filter'),
     jshint = require('gulp-jshint'),
     useref = require('gulp-useref');
 
-
 var srcPath = 'src/'; // Path to source files
 var distPath = 'dist/'; // Path to distribution files
 
-// vendorComponents
-// http://stackoverflow.com/questions/22901726/how-can-i-integrate-bower-with-gulp-js
+// Paths that gulp should watch
+var watchPaths = {
+  scripts: [
+    srcPath +'js/*.js'
+  ],
+  styles: [
+    srcPath +'css/*.css'
+  ],
+  content: [
+    srcPath +'*.html'
+  ],
+  bower: [
+    'bower_components/**'
+  ]
+};
+
+//--| END OF Configuration |--//
+
+//---------------------------//
+//      vendorComponents     //
+//---------------------------//
+// requires:
+//   gulp-filter
+//   main-bower-files
+//   gulp-uglify
+//   gulp-clean-css
+//   gulp-rename
+//---------------------------//
+// Run when add any new bower packages installed (hopefully automated now that in 'serve')
 // grab main files from mainBowerFiles, push to srcPath for working directory
 // and also minify and push in distPath
+// http://stackoverflow.com/questions/22901726/how-can-i-integrate-bower-with-gulp-js
 
 gulp.task('vendorComponents', function() {
   var jsFilter = gulpFilter('**/*.js', {restore: true}),
@@ -52,18 +80,17 @@ gulp.task('vendorComponents', function() {
   .pipe(gulp.dest(distPath + 'components/css/'));
 });
 
-// Paths that gulp should watch
-var watchPaths = {
-  scripts: [
-    srcPath +'js/*.js'
-  ],
-  styles: [
-    srcPath +'css/*.css'
-  ],
-  content: [
-    srcPath +'*.html'
-  ]
-};
+//--| END OF vendorComponents |--//
+
+//---------------------------//
+//      Scripts Workflow     //
+//---------------------------//
+// requires:
+//   gulp-jshint
+//   gulp-sourcemaps
+//   gulp-uglify
+//   gulp-rename
+//---------------------------//
 
 // lint the script files
 gulp.task('lint', function() {
@@ -86,14 +113,34 @@ gulp.task('scripts', function(){
   .pipe(reload({stream: true}))
 });
 
+//--| END OF Scripts Workflow |--//
+
+//---------------------------//
+//      Styles Workflow      //
+//---------------------------//
+// requires:
+//   gulp-clean-css
+//   gulp-rename
+//---------------------------//
+
 // clean CSS - minify it
-gulp.task('minify-css', function(){
+gulp.task('styles', function(){
   gulp.src(watchPaths.styles)
   .pipe(cleanCSS())
   .pipe(rename({ suffix: '.min' }))
   .pipe(gulp.dest(distPath + 'css'))
   .pipe(reload({stream: true}))
 });
+
+//--| END OF Styles Workflow |--//
+
+//---------------------------//
+//      HTML Workflow        //
+//---------------------------//
+// requires:
+//   gulp-useref
+//   gulp-minify-html
+//---------------------------//
 
 // Minify HTML files and output to dist/*.html
 gulp.task('content', function() {
@@ -106,6 +153,16 @@ gulp.task('content', function() {
   .pipe(gulp.dest(distPath))
 });
 
+//--| END OF HTML Workflow |--//
+
+//---------------------------//
+//       Helper Tasks        //
+//---------------------------//
+// requires:
+//   gulp-browser-sync
+//   gulp-gh-pages
+//---------------------------//
+
 // automatically sync browser when make changes to 'watched' files
 gulp.task('serve', function(){
   browserSync.init({
@@ -116,7 +173,8 @@ gulp.task('serve', function(){
 
   gulp.watch( watchPaths.content, ['content']);
   gulp.watch( watchPaths.scripts, ['scripts']);
-  gulp.watch( watchPaths.styles, ['minify-css']);
+  gulp.watch( watchPaths.styles, ['styles']);
+  gulp.watch( watchPaths.bower, ['vendorComponents']);
 });
 
 // publish contents to Github pages
@@ -126,10 +184,11 @@ gulp.task('deploy', function() {
 });
 
 // gulp default watches main files and serves them to browserSync
-// gulp.task('default', ['content', 'scripts', 'minify-css', 'serve']);
+gulp.task('default', ['content', 'scripts', 'styles', 'serve']);
 
 
-gulp.task('default', function (){
-  console.log('hello world');
-});
+// gulp.task('default', function (){
+//   console.log('hello world');
+// });
 
+//--| END OF Helper Tasks |--//
