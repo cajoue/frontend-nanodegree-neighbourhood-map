@@ -8,7 +8,7 @@ var localOrbe = [
   "snippet": "The Round Tower is part of the town's ancient castle. It offers splendid 360° panoramic views over the town, the Jura mountain range, and the Alps."
 },
 {
-  "name": "Moulins Rod",
+  "name": "Quartier des Vieux Moulins",
   "location": { "lat": 46.720926, "lng": 6.532467 },
   "category": "Historic Interest",
   "image-url": "https://ssl.panoramio.com/photo/74920455",
@@ -20,6 +20,20 @@ var localOrbe = [
   "category": "Trail",
   "image-url": "https://ssl.panoramio.com/photo/55667745",
   "snippet": "A walk through the gorges of the River Orbe presents hikers with a wealth of natural resources in the foothills of the Jura Mountains, between Vallorbe and Orbe."
+},
+{
+  "name": "Mosaïques Romaines",
+  "location": { "lat": 46.742346, "lng": 6.535903 },
+  "category": "Historic Interest",
+  "image-url": "https://ssl.panoramio.com/photo/76864223",
+  "snippet": "Discovered in the middle of the 19th century, these mosaics paved eight of the 100 rooms in a huge and luxurious Gallo-Roman villa that was built around 160 AD"
+},
+{
+  "name": "Orbe à petits pas",
+  "location": { "lat": 46.723168, "lng": 6.529570 },
+  "category": "Trail",
+  "image-url": "https://ssl.panoramio.com/photo/20468692",
+  "snippet": "Two easy walks, marked with yellow and red steps on the ground, guide you around the town, its surroundings, and the river."
 }
 ];
 
@@ -28,7 +42,7 @@ var map;
 var initMap = function () {
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: {lat: 46.724258, lng: 6.532064},
-    zoom: 14
+    zoom: 13
   });
   setMarkers(localOrbe);
 };
