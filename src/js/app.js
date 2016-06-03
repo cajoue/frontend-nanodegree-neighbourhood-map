@@ -1,41 +1,51 @@
+/* ======= Model ======= */
 // data for places in Orbe
+/* ======= ===== ======= */
 var localOrbe = [
 {
   "name": "La Tour Ronde",
   "location": { "lat": 46.725228, "lng": 6.532651 },
   "category": "Historic Interest",
-  "image-url": "https://ssl.panoramio.com/photo/55668009",
+  "imgSrc": "https://ssl.panoramio.com/photo/55668009",
   "snippet": "The Round Tower is part of the town's ancient castle. It offers splendid 360° panoramic views over the town, the Jura mountain range, and the Alps."
 },
 {
   "name": "Quartier des Vieux Moulins",
   "location": { "lat": 46.720926, "lng": 6.532467 },
   "category": "Historic Interest",
-  "image-url": "https://ssl.panoramio.com/photo/74920455",
+  "imgSrc": "https://ssl.panoramio.com/photo/74920455",
   "snippet": "The ancient flourmills date back to 1423 and were in use until the very end of the 1990s."
 },
 {
   "name": "Les Gorges de l'Orbe",
   "location": { "lat": 46.727536, "lng": 6.509110 },
   "category": "Trail",
-  "image-url": "https://ssl.panoramio.com/photo/55667745",
+  "imgSrc": "https://ssl.panoramio.com/photo/55667745",
   "snippet": "A walk through the gorges of the River Orbe presents hikers with a wealth of natural resources in the foothills of the Jura Mountains, between Vallorbe and Orbe."
 },
 {
   "name": "Mosaïques Romaines",
   "location": { "lat": 46.742346, "lng": 6.535903 },
   "category": "Historic Interest",
-  "image-url": "https://ssl.panoramio.com/photo/76864223",
+  "imgSrc": "https://ssl.panoramio.com/photo/76864223",
   "snippet": "Discovered in the middle of the 19th century, these mosaics paved eight of the 100 rooms in a huge and luxurious Gallo-Roman villa that was built around 160 AD"
 },
 {
   "name": "Orbe à petits pas",
   "location": { "lat": 46.723168, "lng": 6.529570 },
   "category": "Trail",
-  "image-url": "https://ssl.panoramio.com/photo/20468692",
+  "imgSrc": "https://ssl.panoramio.com/photo/20468692",
   "snippet": "Two easy walks, marked with yellow and red steps on the ground, guide you around the town, its surroundings, and the river."
 }
 ];
+
+/* ======= Google Maps ======= */
+// map, infowindow
+// initMap()
+// createMarker()
+// setMarkers()
+// setInfoWindow()
+/* ======= =========== ======= */
 
 // simple map example from google api
 var map;
@@ -89,4 +99,28 @@ function setInfoWindow (map, marker, poi){
   infowindow.open(map, marker, poi);
 }
 
+/* ======= list View ======= */
+// Poi()
+/* ======= ========= ======= */
 
+// data is an object literal that contains location data for a single place in Orbe
+var Poi = function(data){
+  this.name = ko.observable(data.name);
+  this.location = ko.observable(data.location);
+  this.category = ko.observable(data.category);
+  this.imageSrc = ko.observable(data.imageSrc);
+  this.snippet = ko.observable(data.snippet);
+};
+
+
+/* ======= ViewModel ======= */
+// ViewModel()
+/* ======= =========== ======= */
+
+var ViewModel = function(){
+  var self = this;
+  // create array of places
+  this.locationList = ko.observableArray([]);
+};
+
+ko.applyBindings(new ViewModel());
