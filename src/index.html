@@ -20,8 +20,8 @@
     </header>
 
     <section id="data-results">
-      <ul id="data-list">
-        <li>item</li>
+      <ul id="data-list" data-bind="foreach: locationList">
+        <li data-bind="text: name"></li>
       </ul>
     </section>
 
