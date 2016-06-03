@@ -100,10 +100,16 @@ function setInfoWindow (map, marker, poi){
 }
 
 /* ======= list View ======= */
-// Poi()
+// Poi() Point of Interest
+// observables:
+// Poi.name
+// Poi.location
+// Poi.category
+// Poi.imageSrc
+// Poi.snippet
 /* ======= ========= ======= */
 
-// data is an object literal that contains location data for a single place in Orbe
+// data is an object literal that contains location data for a single poi in Orbe
 var Poi = function(data){
   this.name = ko.observable(data.name);
   this.location = ko.observable(data.location);
@@ -121,6 +127,18 @@ var ViewModel = function(){
   var self = this;
   // create array of places
   this.locationList = ko.observableArray([]);
+
+  // pass localOrbe object literal data to new Poi
+  // loop over the data array and push each new poi into locationList
+  // use 'self' to avoid 'this' keyword scope confusion
+  localOrbe.forEach(function(poiItem){
+    self.locationList.push( new Poi(poiItem) );
+  });
+
+// use first poi in Orbe to test selected place
+  this.currentPoi = ko.observable(this.locationList()[0].name());
+  console.log(this.currentPoi());
+
 };
 
 ko.applyBindings(new ViewModel());
