@@ -14,7 +14,8 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     gulpFilter = require('gulp-filter'),
     jshint = require('gulp-jshint'),
-    useref = require('gulp-useref');
+    useref = require('gulp-useref'),
+    strip = require('gulp-strip-comments');
 
 var srcPath = 'src/'; // Path to source files
 var distPath = 'dist/'; // Path to distribution files
@@ -51,6 +52,7 @@ var watchPaths = {
 // grab main files from mainBowerFiles, push to srcPath for working directory
 // and also minify and push in distPath
 // http://stackoverflow.com/questions/22901726/how-can-i-integrate-bower-with-gulp-js
+// note override required for bootstrap: https://github.com/twbs/bootstrap/issues/16663
 
 gulp.task('vendorComponents', function() {
   var jsFilter = gulpFilter('**/*.js', {restore: true}),
@@ -90,6 +92,7 @@ gulp.task('vendorComponents', function() {
 //   gulp-sourcemaps
 //   gulp-uglify
 //   gulp-rename
+//   gulp-strip-comments
 //---------------------------//
 
 // lint the script files
@@ -106,6 +109,7 @@ gulp.task('scripts', function(){
   gulp.src(watchPaths.scripts)
   .pipe(sourcemap.init())
   .pipe(concat('app.js'))
+  .pipe(strip())
   .pipe(uglify())
   .pipe(rename({ suffix: '.min' }))
   .pipe(sourcemap.write())
