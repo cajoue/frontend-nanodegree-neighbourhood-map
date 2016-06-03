@@ -3,16 +3,35 @@
     border: 1px solid red !important;
 }*/
 
+/* all map containers must be full height */
+html, body, .map-app, .map { height: 100% }
 
-body, html, {
-  height: 100%;
-  margin: 0;
+body {
+  margin: 0 auto;
   padding: 0;
+  color: #aaaaaa;
+  background: #343434;
+  max-width: 800px;
+  font-family: 'Roboto', sans-serif;
 }
 
-.map {
-  height: 500px;
-}
 .map-canvas {
   height: 100%;
 }
+
+/* TESTING
+----------------------------------*/
+/* colors: 8C2C00, 59008D, 608C00, 00338C*/
+/* background: url("https://static.panoramio.com.storage.googleapis.com/photos/large/14542561.jpg"); */
+
+
+    /* overwrite default padding, remove bullets */
+    /* make background black */
+    ul {
+      padding: 10px;
+      background: rgba(0,0,0,0.5);
+      list-style-type: none;
+    }
+    li {
+      padding: 0px 10px 0px 10px;
+    }

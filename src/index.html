@@ -5,21 +5,23 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta name="author" content="Valerie Yallup">
   <title>Neighbourhood Map</title>
-
+  <link rel="stylesheet" href="components/css/normalize.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,900' rel='stylesheet'>
 <!-- build:css css/main.min.css -->
   <link rel="stylesheet" href="css/main.css">
 <!-- endbuild -->
 
 </head>
 <body>
-  <section id="map-app">
+  <section id="map-app" class="map-app">
 
     <header>
       <h1>Neighbourhood Map</h1>
       <input id="search" placeholder="Search for...">
     </header>
 
-    <section id="data-results">
+    <section id="data-results" class="data-results">
+      <p>points of interest</p>
       <ul id="data-list" data-bind="foreach: locationList">
         <li data-bind="text: name"></li>
       </ul>
