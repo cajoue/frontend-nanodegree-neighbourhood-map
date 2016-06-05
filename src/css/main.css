@@ -3,35 +3,79 @@
     border: 1px solid red !important;
 }*/
 
-/* all map containers must be full height */
-html, body, .map-app, .map { height: 100% }
-
-body {
-  margin: 0 auto;
-  padding: 0;
-  color: #aaaaaa;
-  background: #343434;
-  max-width: 800px;
-  font-family: 'Roboto', sans-serif;
-}
-
-.map-canvas {
-  height: 100%;
-}
-
-/* TESTING
-----------------------------------*/
 /* colors: 8C2C00, 59008D, 608C00, 00338C*/
 /* background: url("https://static.panoramio.com.storage.googleapis.com/photos/large/14542561.jpg"); */
 
 
-    /* overwrite default padding, remove bullets */
-    /* make background black */
-    ul {
-      padding: 10px;
-      background: rgba(0,0,0,0.5);
-      list-style-type: none;
-    }
-    li {
-      padding: 0px 10px 0px 10px;
-    }
+/* STYLES
+----------------------------------*/
+
+/* all map containers must be full height for map to show */
+html, body, .map, .jumbotron {
+  height: 100%
+}
+
+/* Prevent scroll on narrow devices */
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  color: #aaaaaa;
+  background: #343434;
+  padding: 50px 0 0 0;
+  /*font-family: 'Roboto', sans-serif;*/
+}
+
+/* overwrite default padding, remove bullets */
+/* make background black */
+ul {
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  list-style-type: none;
+}
+li {
+  padding: 0px 10px 0px 10px;
+}
+
+footer {
+  padding: 30px 0;
+}
+.map .jumbotron {
+  background-color: #8C2C00;
+  padding: 10px 10px;
+}
+
+.map-canvas {
+  height: 100%;
+  border-radius: 5px;
+}
+
+
+/* OFF CANVAS
+----------------------------------*/
+
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
+
+@media (min-width: 0) {
+  .navbar-toggle {
+    display: block; /* force showing the toggle */
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 0;
+  }
+  .navbar {
+    right: auto;
+    background: none;
+    border: none;
+  }
+}
+
+

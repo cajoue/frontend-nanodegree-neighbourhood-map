@@ -1,45 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" data-framework="knockoutjs">
 <head>
-  <meta charset = "utf-8">
-  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Valerie Yallup">
   <title>Neighbourhood Map</title>
   <link rel="stylesheet" href="components/css/normalize.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="components/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Jasny extends Bootstrap: used offcanvas capabilities-->
+  <link href="components/css/jasny-bootstrap.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,900' rel='stylesheet'>
-<!-- build:css css/main.min.css -->
-  <link rel="stylesheet" href="css/main.css">
-<!-- endbuild -->
+  <!-- build:css css/main.min.css -->
+    <link rel="stylesheet" href="css/main.css">
+  <!-- endbuild -->
 
 </head>
 <body>
-  <section id="map-app" class="map-app">
+  <!-- Navigation list of places starts offcanvas -->
+  <div class="navmenu navmenu-default navmenu-fixed-left offcanvas">
+    <a class="navmenu-brand" href="#">Points of Interest</a>
+    <form class="navmenu-form">
+      <input type="search" class="form-control" placeholder="Search..." id="search">
+    </form>
+    <div class="nav navmenu-nav list-group" data-bind="foreach: locationList">
+          <a href="#" class="list-group-item" data-bind="text: name">Link</a>
+        </div>
+  </div>
 
-    <header>
-      <h1>Neighbourhood Map</h1>
-      <input id="search" placeholder="Search for...">
-    </header>
+  <!-- Navigation bar contains icon to toggle list of places -->
+  <div class="navbar navbar-default navbar-fixed-top">
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
 
-    <section id="data-results" class="data-results">
-      <p>points of interest</p>
-      <ul id="data-list" data-bind="foreach: locationList">
-        <li data-bind="text: name"></li>
-      </ul>
-    </section>
-
-    <section id="map" class="map">
-      <p>Map goes here</p>
+  <!-- Container for Page title and Google map -->
+  <div class="container map">
+    <div class="page-header">
+      <h1>Quartier d'Orbe</h1>
+    </div>
+    <div class="jumbotron map">
       <div id="map-canvas" class="map-canvas"></div>
-    </section>
-  </section>
+    </div>
+  </div>
 
+<!-- JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
   <script type="text/javascript" src="components/js/jquery.min.js"></script>
+  <script src="components/js/bootstrap.min.js"></script>
+  <script src="components/js/jasny-bootstrap.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
   <script src="components/js/knockout.min.js"></script>
 
-    <!-- build:js js/app.min.js -->
-    <script type="text/javascript" src="js/app.js"></script>
-    <!-- endbuild -->
+  <!-- build:js js/app.min.js -->
+  <script type="text/javascript" src="js/app.js"></script>
+  <!-- endbuild -->
 
 </body>
 </html>
