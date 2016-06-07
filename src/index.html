@@ -64,13 +64,14 @@
   <script type="text/javascript" src="components/js/jquery.min.js"></script>
   <script src="components/js/bootstrap.min.js"></script>
   <script src="components/js/jasny-bootstrap.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
   <script src="components/js/knockout.min.js"></script>
 
   <!-- build:js js/app.min.js -->
   <script type="text/javascript" src="js/app.js"></script>
   <!-- endbuild -->
-
+  <!-- occasionally got warning that 'google' wasn't defined - try load script after app.js and add basic error handler -->
+  <script onerror="googleLoadError()" src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
 </body>
 </html>
 

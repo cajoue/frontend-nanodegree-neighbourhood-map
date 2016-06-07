@@ -99,6 +99,11 @@ function setInfoWindow (map, marker, poi){
   infowindow.open(map, marker, poi);
 }
 
+ // Error handling for the Google Maps
+ var googleLoadError = function() {
+     alert('Google maps load error');
+ };
+
 /* ======= list View ======= */
 // Poi() Point of Interest
 // observables:
@@ -149,7 +154,8 @@ var ViewModel = function(){
       return place.name().toLowerCase().indexOf(search) >= 0;
     });
   });
-  console.log(this.searchResults());
+  //console.log(this.searchResults());
+  //setMarkers(this.searchResults());
 
 };
 
