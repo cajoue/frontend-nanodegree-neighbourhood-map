@@ -156,7 +156,17 @@ var ViewModel = function(){
   });
   //console.log(this.searchResults());
   //setMarkers(this.searchResults());
+ initMap();
+};
+
+function googleSuccess() {
+    if (typeof google !== 'undefined') {
+        ko.applyBindings(new ViewModel());
+    }
+    else {
+        googleError();
+    }
 
 };
 
-ko.applyBindings(new ViewModel());
+//ko.applyBindings(new ViewModel());
