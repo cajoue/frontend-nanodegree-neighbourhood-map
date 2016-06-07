@@ -11,7 +11,7 @@
 ----------------------------------*/
 
 /* all map containers must be full height for map to show */
-html, body, .map, .jumbotron {
+html, body, .map {
   height: 100%
 }
 
@@ -42,9 +42,9 @@ li {
 footer {
   padding: 30px 0;
 }
-.map .jumbotron {
-  background-color: #8C2C00;
-  padding: 10px 10px;
+.map {
+/*  background-color: #8C2C00;
+  padding: 10px 10px;*/
 }
 
 .map-canvas {

@@ -12,6 +12,8 @@
   <!-- Jasny extends Bootstrap: used offcanvas capabilities-->
   <link href="components/css/jasny-bootstrap.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,900' rel='stylesheet'>
+  <!-- font awesome -->
+  <script src="https://use.fontawesome.com/7fa5f53c22.js"></script>
   <!-- build:css css/main.min.css -->
     <link rel="stylesheet" href="css/main.css">
   <!-- endbuild -->
@@ -22,11 +24,19 @@
   <div class="navmenu navmenu-default navmenu-fixed-left offcanvas">
     <a class="navmenu-brand" href="#">Points of Interest</a>
     <form class="navmenu-form">
-      <input type="search" class="form-control" placeholder="Search..." id="search">
+      <input type="search" class="form-control" placeholder="Search..." id="search" data-bind="value: searchName, valueUpdate: 'afterkeydown'">
     </form>
-    <div class="nav navmenu-nav list-group" data-bind="foreach: locationList">
-          <a href="#" class="list-group-item" data-bind="text: name">Link</a>
-        </div>
+    <!-- all locations -->
+<!--     <div class="nav navmenu-nav list-group" data-bind="foreach: locationList">
+      <a href="#" class="list-group-item" data-bind="text: name">Link</a>
+    </div> -->
+    <!-- end all locations -->
+
+    <!-- search results-->
+    <div class="nav navmenu-nav list-group" data-bind="foreach: searchResults">
+      <a href="#" class="list-group-item" data-bind="text: name">Link</a>
+    </div>
+    <!-- end search results -->
   </div>
 
   <!-- Navigation bar contains icon to toggle list of places -->
@@ -43,7 +53,7 @@
     <div class="page-header">
       <h1>Quartier d'Orbe</h1>
     </div>
-    <div class="jumbotron map">
+    <div class="map">
       <div id="map-canvas" class="map-canvas"></div>
     </div>
   </div>

@@ -139,6 +139,18 @@ var ViewModel = function(){
   this.currentPoi = ko.observable(this.locationList()[0].name());
   console.log(this.currentPoi());
 
+  // search section
+  // data-bind searchName to the form input in left nav - value: searchName
+  // data-bind to update on new letter - valueUpdate: 'afterkeydown'
+  this.searchName = ko.observable('');
+  this.searchResults = ko.computed(function() {
+    var search = self.searchName().toLowerCase();
+    return ko.utils.arrayFilter(self.locationList(), function(place) {
+      return place.name().toLowerCase().indexOf(search) >= 0;
+    });
+  });
+  console.log(this.searchResults());
+
 };
 
 ko.applyBindings(new ViewModel());
