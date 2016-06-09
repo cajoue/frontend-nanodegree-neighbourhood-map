@@ -39,6 +39,26 @@ var localOrbe = [
 }
 ];
 
+/* ======= list View ======= */
+// Poi() Point of Interest
+// observables:
+// Poi.name
+// Poi.location
+// Poi.category
+// Poi.imageSrc
+// Poi.snippet
+/* ======= ========= ======= */
+
+// data is an object literal that contains location data for a single poi in Orbe
+var Poi = function(data){
+  this.name = ko.observable(data.name);
+  this.location = ko.observable(data.location);
+  this.category = ko.observable(data.category);
+  this.imageSrc = ko.observable(data.imageSrc);
+  this.snippet = ko.observable(data.snippet);
+};
+
+
 /* ======= Google Maps ======= */
 // map, infowindow
 // initMap()
@@ -100,30 +120,6 @@ function setInfoWindow (map, marker, poi){
   infowindow.open(map, marker, poi);
 }
 
- // Error handling for the Google Maps
- var googleLoadError = function() {
-     alert('Google maps load error');
- };
-
-/* ======= list View ======= */
-// Poi() Point of Interest
-// observables:
-// Poi.name
-// Poi.location
-// Poi.category
-// Poi.imageSrc
-// Poi.snippet
-/* ======= ========= ======= */
-
-// data is an object literal that contains location data for a single poi in Orbe
-var Poi = function(data){
-  this.name = ko.observable(data.name);
-  this.location = ko.observable(data.location);
-  this.category = ko.observable(data.category);
-  this.imageSrc = ko.observable(data.imageSrc);
-  this.snippet = ko.observable(data.snippet);
-};
-
 
 /* ======= ViewModel ======= */
 // ViewModel()
@@ -133,6 +129,7 @@ var ViewModel = function(){
   var self = this;
   // create array of places
   self.locationList = ko.observableArray([]);
+  self.searchName = ko.observable('');
 
   // pass localOrbe object literal data to new Poi
   // loop over the data array and push each new poi into locationList
@@ -148,7 +145,7 @@ var ViewModel = function(){
   // search section
   // data-bind searchName to the form input in left nav - value: searchName
   // data-bind to update on new letter - valueUpdate: 'afterkeydown'
-  self.searchName = ko.observable('');
+
   self.searchResults = ko.computed(function() {
     var search = self.searchName().toLowerCase();
     return ko.utils.arrayFilter(self.locationList(), function(place) {
@@ -161,6 +158,8 @@ var ViewModel = function(){
  initMap(self.searchResults());
 };
 
+
+// If call to google maps api successful create viewmodel and apply bindings
 function googleSuccess() {
     if (typeof google !== 'undefined') {
         ko.applyBindings(new ViewModel());
@@ -169,5 +168,11 @@ function googleSuccess() {
         googleError();
     }
 };
+
+// Error handling for the Google Maps
+ var googleLoadError = function() {
+     alert('Google maps load error');
+ };
+
 
 //ko.applyBindings(new ViewModel());
