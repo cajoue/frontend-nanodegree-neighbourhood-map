@@ -62,11 +62,14 @@ var Poi = function(json){
   self.mapMarker = new google.maps.Marker({
     position: {lat: self.location().lat, lng: self.location().lng},
     title: self.name(),
+    animation: google.maps.Animation.DROP,
     map: map
   });
   //  add click handler to marker
   self.mapMarker.addListener('click', function() {
     setInfoWindow(map, self.mapMarker, self);
+    addBounceTimeout(self.mapMarker);
+    // toggleBounce(self.mapMarker);
   });
 };
 
@@ -88,7 +91,6 @@ var initMap = function () {
     // center: {lat: 46.724258, lng: 6.532064},
     zoom: 13
   });
-  //setMarkers(locations);
 };
 
 // add simple info window to poi marker
@@ -111,6 +113,25 @@ function setInfoWindow (map, marker, poi){
   });
   infowindow.open(map, marker, poi);
 }
+
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
+}
+
+function addBounceTimeout(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){ marker.setAnimation(null); }, 2100);
+  }
+}
+
+
 
 
 /* ======= ViewModel ======= */
