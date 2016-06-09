@@ -1,5 +1,5 @@
 /* ======= Model ======= */
-// data for places in Orbe
+// json data for places in Orbe
 /* ======= ===== ======= */
 var localOrbe = [
 {
@@ -49,13 +49,15 @@ var localOrbe = [
 // Poi.snippet
 /* ======= ========= ======= */
 
-// data is an object literal that contains location data for a single poi in Orbe
-var Poi = function(data){
-  this.name = ko.observable(data.name);
-  this.location = ko.observable(data.location);
-  this.category = ko.observable(data.category);
-  this.imageSrc = ko.observable(data.imageSrc);
-  this.snippet = ko.observable(data.snippet);
+// json is an object literal that contains location data for a single poi in Orbe
+// Poi is an object constuctor for a single place of interest
+var Poi = function(json){
+  var self = this;
+  self.name = ko.observable(json.name);
+  self.location = ko.observable(json.location);
+  self.category = ko.observable(json.category);
+  self.imageSrc = ko.observable(json.imageSrc);
+  self.snippet = ko.observable(json.snippet);
 };
 
 
@@ -131,8 +133,8 @@ var ViewModel = function(){
   self.locationList = ko.observableArray([]);
   self.searchName = ko.observable('');
 
-  // pass localOrbe object literal data to new Poi
-  // loop over the data array and push each new poi into locationList
+  // pass localOrbe object literal json datato new Poi
+  // loop over the json array and push each new poi into locationList
   // use 'self' to avoid 'this' keyword scope confusion
   localOrbe.forEach(function(poiItem){
     self.locationList.push( new Poi(poiItem) );
