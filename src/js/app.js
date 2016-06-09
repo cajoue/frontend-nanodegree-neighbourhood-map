@@ -91,37 +91,17 @@ var initMap = function () {
   //setMarkers(locations);
 };
 
-// create a poi marker add click listener to open info window
-// function createMarker(poi) {
-//   var marker = new google.maps.Marker({
-//     position: {lat: poi.location().lat, lng: poi.location().lng},
-//     title: poi.name(),
-//     map: map
-//   });
-
-//   marker.addListener('click', function() {
-//     setInfoWindow(map, marker, poi);
-//   });
-// }
-
-// add simple location markers to map
-// function setMarkers(locations) {
-//   for (var i = 0; i < locations.length; i++) {
-//     createMarker(locations[i]);
-//   }
-// }
-
 // add simple info window to poi marker
 // only want one info window open at a time. use global to keep track of existing window
 var infowindow;
 function setInfoWindow (map, marker, poi){
   var contentString = '<div id="content">'+
-      '<div id="siteNotice">' + '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">' + poi.name() + '</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>' + poi.name() + '</b>. ' + poi.snippet() +
-      '</div>'+
-      '</div>';
+  '<div id="siteNotice">' + '</div>'+
+  '<h1 id="firstHeading" class="firstHeading">' + poi.name() + '</h1>'+
+  '<div id="bodyContent">'+
+  '<p><b>' + poi.name() + '</b>. ' + poi.snippet() +
+  '</div>'+
+  '</div>';
 
   // if an open window exists, close it before making new one
   if ( infowindow !== undefined ) infowindow.close();
@@ -143,31 +123,39 @@ var ViewModel = function(){
   self.locationList = ko.observableArray([]);
   self.searchName = ko.observable('');
 
-  // pass localOrbe object literal json datato new Poi
+  // pass localOrbe object literal json data to new Poi
   // loop over the json array and push each new poi into locationList
   // use 'self' to avoid 'this' keyword scope confusion
-  localOrbe.forEach(function(poiItem){
-    self.locationList.push( new Poi(poiItem) );
+  localOrbe.forEach(function(json){
+    self.locationList.push( new Poi(json) );
   });
 
-// use first poi in Orbe to test selected place
+  // use first poi in Orbe to test selected place
   self.currentPoi = ko.observable(this.locationList()[0].name());
-  console.log(this.currentPoi());
+  console.log(self.currentPoi());
 
   // search section
   // data-bind searchName to the form input in left nav - value: searchName
   // data-bind to update on new letter - valueUpdate: 'afterkeydown'
-
+  // setVisible is a method on google marker
   self.searchResults = ko.computed(function() {
+    var results = [];
+    // use value in search box
     var search = self.searchName().toLowerCase();
-    return ko.utils.arrayFilter(self.locationList(), function(place) {
-      return place.name().toLowerCase().indexOf(search) >= 0;
+    // string match for each poi.name in the location list
+    return ko.utils.arrayFilter(self.locationList(), function(poi) {
+      if (poi.name().toLowerCase().indexOf(search) >= 0){
+        results.push(poi);
+        // show marker
+        poi.mapMarker.setVisible(true);
+        return results;
+      } else {
+        // hide marker
+        poi.mapMarker.setVisible(false);
+      }
     });
   });
   console.log(this.searchResults());
-  //setMarkers(this.searchResults());
-  // use array of poi objects to initiate map instead of directly reading json from model data localOrbe
- //initMap(self.searchResults());
 };
 
 
@@ -186,6 +174,3 @@ function googleSuccess() {
 var googleLoadError = function() {
   alert('Google maps load error');
 };
-
-
-//ko.applyBindings(new ViewModel());
