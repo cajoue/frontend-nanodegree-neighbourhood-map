@@ -58,6 +58,16 @@ var Poi = function(json){
   self.category = ko.observable(json.category);
   self.imageSrc = ko.observable(json.imageSrc);
   self.snippet = ko.observable(json.snippet);
+  // attach the map marker for this Poi object
+  self.mapMarker = new google.maps.Marker({
+    position: {lat: self.location().lat, lng: self.location().lng},
+    title: self.name(),
+    map: map
+  });
+  //  add click handler to marker
+  self.mapMarker.addListener('click', function() {
+    setInfoWindow(map, self.mapMarker, self);
+  });
 };
 
 
@@ -71,35 +81,35 @@ var Poi = function(json){
 
 // simple map example from google api
 var map;
-var initMap = function (locations) {
+var initMap = function () {
   const ORBE = {lat: 46.724258, lng: 6.532064};
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: ORBE,
     // center: {lat: 46.724258, lng: 6.532064},
     zoom: 13
   });
-  setMarkers(locations);
+  //setMarkers(locations);
 };
 
 // create a poi marker add click listener to open info window
-function createMarker(poi) {
-  var marker = new google.maps.Marker({
-    position: {lat: poi.location().lat, lng: poi.location().lng},
-    title: poi.name(),
-    map: map
-  });
+// function createMarker(poi) {
+//   var marker = new google.maps.Marker({
+//     position: {lat: poi.location().lat, lng: poi.location().lng},
+//     title: poi.name(),
+//     map: map
+//   });
 
-  marker.addListener('click', function() {
-    setInfoWindow(map, marker, poi);
-  });
-}
+//   marker.addListener('click', function() {
+//     setInfoWindow(map, marker, poi);
+//   });
+// }
 
 // add simple location markers to map
-function setMarkers(locations) {
-  for (var i = 0; i < locations.length; i++) {
-    createMarker(locations[i]);
-  }
-}
+// function setMarkers(locations) {
+//   for (var i = 0; i < locations.length; i++) {
+//     createMarker(locations[i]);
+//   }
+// }
 
 // add simple info window to poi marker
 // only want one info window open at a time. use global to keep track of existing window
@@ -157,24 +167,25 @@ var ViewModel = function(){
   console.log(this.searchResults());
   //setMarkers(this.searchResults());
   // use array of poi objects to initiate map instead of directly reading json from model data localOrbe
- initMap(self.searchResults());
+ //initMap(self.searchResults());
 };
 
 
 // If call to google maps api successful create viewmodel and apply bindings
 function googleSuccess() {
-    if (typeof google !== 'undefined') {
-        ko.applyBindings(new ViewModel());
-    }
-    else {
-        googleError();
-    }
+  if (typeof google !== 'undefined') {
+    initMap();
+    ko.applyBindings(new ViewModel());
+  }
+  else {
+    googleError();
+  }
 };
 
 // Error handling for the Google Maps
- var googleLoadError = function() {
-     alert('Google maps load error');
- };
+var googleLoadError = function() {
+  alert('Google maps load error');
+};
 
 
 //ko.applyBindings(new ViewModel());
