@@ -120,7 +120,9 @@ function addBounceTimeout(marker) {
   }
 }
 
+// google maps panTo method used to change the center of the map to the given LatLng
 function activateMarker(map, marker, poi){
+  map.panTo({lat: poi.location().lat, lng: poi.location().lng});
   addBounceTimeout(marker);
   setInfoWindow(map, marker, poi);
 }
