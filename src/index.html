@@ -34,7 +34,7 @@
 
     <!-- search results-->
     <div class="nav navmenu-nav list-group" data-bind="foreach: searchResults">
-      <a href="#" class="list-group-item" data-bind="text: name, click: $root.setCurrentPoi">Link</a>
+      <a href="#" class="list-group-item" data-bind="text: name, click: $root.setCurrentPoi, css:{active: $parent.searchName() === $data}">Link</a>
     </div>
     <!-- end search results -->
   </div>
@@ -64,7 +64,6 @@
   <script type="text/javascript" src="components/js/jquery.min.js"></script>
   <script src="components/js/bootstrap.min.js"></script>
   <script src="components/js/jasny-bootstrap.min.js"></script>
-
   <script src="components/js/knockout.min.js"></script>
 
   <!-- build:js js/app.min.js -->

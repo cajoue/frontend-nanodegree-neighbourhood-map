@@ -42,16 +42,15 @@ li {
 footer {
   padding: 30px 0;
 }
-.map {
-/*  background-color: #8C2C00;
-  padding: 10px 10px;*/
-}
 
 .map-canvas {
   height: 100%;
   border-radius: 5px;
 }
 
+a.list-group-item:focus {
+  background-color: #f4b400;
+}
 
 /* OFF CANVAS
 ----------------------------------*/
@@ -67,6 +66,18 @@ footer {
   }
 }
 
+/* override jasny to make nav list narrower */
+@media (max-width: 768px) {
+  .navmenu,
+  .navbar-offcanvas {
+    width: 200px;
+    height: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+  }
+}
+
 @media (min-width: 992px) {
   body {
     padding: 0;
@@ -77,5 +88,6 @@ footer {
     border: none;
   }
 }
+
 
 
