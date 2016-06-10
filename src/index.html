@@ -34,7 +34,7 @@
 
     <!-- search results-->
     <div class="nav navmenu-nav list-group" data-bind="foreach: searchResults">
-      <a href="#" class="list-group-item" data-bind="text: name">Link</a>
+      <a href="#" class="list-group-item" data-bind="text: name, click: $root.setCurrentPoi">Link</a>
     </div>
     <!-- end search results -->
   </div>

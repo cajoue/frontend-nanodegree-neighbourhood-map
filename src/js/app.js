@@ -67,9 +67,7 @@ var Poi = function(json){
   });
   //  add click handler to marker
   self.mapMarker.addListener('click', function() {
-    setInfoWindow(map, self.mapMarker, self);
-    addBounceTimeout(self.mapMarker);
-    // toggleBounce(self.mapMarker);
+    activateMarker(map, self.mapMarker, self);
   });
 };
 
@@ -88,7 +86,6 @@ var initMap = function () {
   const ORBE = {lat: 46.724258, lng: 6.532064};
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: ORBE,
-    // center: {lat: 46.724258, lng: 6.532064},
     zoom: 13
   });
 };
@@ -114,14 +111,6 @@ function setInfoWindow (map, marker, poi){
   infowindow.open(map, marker, poi);
 }
 
-function toggleBounce(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
-
 function addBounceTimeout(marker) {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
@@ -131,8 +120,15 @@ function addBounceTimeout(marker) {
   }
 }
 
+function activateMarker(map, marker, poi){
+  addBounceTimeout(marker);
+  setInfoWindow(map, marker, poi);
+}
 
-
+function resetMarkers(){
+  // if an open window exists, close it
+  if ( infowindow !== undefined ) infowindow.close();
+}
 
 /* ======= ViewModel ======= */
 // ViewModel()
@@ -167,6 +163,7 @@ var ViewModel = function(){
     return ko.utils.arrayFilter(self.locationList(), function(poi) {
       if (poi.name().toLowerCase().indexOf(search) >= 0){
         results.push(poi);
+        resetMarkers();
         // show marker
         poi.mapMarker.setVisible(true);
         return results;
@@ -176,6 +173,13 @@ var ViewModel = function(){
       }
     });
   });
+
+// click on list item
+  self.setCurrentPoi = function(poi){
+    activateMarker(map, poi.mapMarker, poi);
+    self.currentPoi(poi.name());
+    console.log(self.currentPoi());
+  };
   console.log(this.searchResults());
 };
 
