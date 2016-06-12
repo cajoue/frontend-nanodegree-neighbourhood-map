@@ -52,6 +52,11 @@ a.list-group-item:focus {
   background-color: #f4b400;
 }
 
+.btn-danger,
+.btn-success {
+  margin: 10px 5px 0 0;
+}
+
 /* OFF CANVAS
 ----------------------------------*/
 

@@ -6,35 +6,35 @@ var localOrbe = [
   "name": "La Tour Ronde",
   "location": { "lat": 46.725228, "lng": 6.532651 },
   "category": "Historic Interest",
-  "imgSrc": "https://ssl.panoramio.com/photo/55668009",
+  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/55668009.jpg",
   "snippet": "The Round Tower is part of the town's ancient castle. It offers splendid 360° panoramic views over the town, the Jura mountain range, and the Alps."
 },
 {
   "name": "Quartier des Vieux Moulins",
   "location": { "lat": 46.720926, "lng": 6.532467 },
   "category": "Historic Interest",
-  "imgSrc": "https://ssl.panoramio.com/photo/74920455",
+  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/74920455.jpg",
   "snippet": "The ancient flourmills date back to 1423 and were in use until the very end of the 1990s."
 },
 {
   "name": "Les Gorges de l'Orbe",
   "location": { "lat": 46.727536, "lng": 6.509110 },
   "category": "Trail",
-  "imgSrc": "https://ssl.panoramio.com/photo/55667745",
+  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/55667745.jpg",
   "snippet": "A walk through the gorges of the River Orbe presents hikers with a wealth of natural resources in the foothills of the Jura Mountains, between Vallorbe and Orbe."
 },
 {
   "name": "Mosaïques Romaines",
   "location": { "lat": 46.742346, "lng": 6.535903 },
   "category": "Historic Interest",
-  "imgSrc": "https://ssl.panoramio.com/photo/76864223",
+  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/76864223.jpg",
   "snippet": "Discovered in the middle of the 19th century, these mosaics paved eight of the 100 rooms in a huge and luxurious Gallo-Roman villa that was built around 160 AD"
 },
 {
   "name": "Orbe à petits pas",
   "location": { "lat": 46.723168, "lng": 6.529570 },
   "category": "Trail",
-  "imgSrc": "https://ssl.panoramio.com/photo/20468692",
+  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/20468692.jpg",
   "snippet": "Two easy walks, marked with yellow and red steps on the ground, guide you around the town, its surroundings, and the river."
 }
 ];
@@ -56,7 +56,7 @@ var Poi = function(json){
   self.name = ko.observable(json.name);
   self.location = ko.observable(json.location);
   self.category = ko.observable(json.category);
-  self.imageSrc = ko.observable(json.imageSrc);
+  self.imageSrc = ko.observable(json.imgSrc);
   self.snippet = ko.observable(json.snippet);
   // attach the map marker for this Poi object
   self.mapMarker = new google.maps.Marker({
@@ -94,9 +94,13 @@ var initMap = function () {
 // only want one info window open at a time. use global to keep track of existing window
 var infowindow;
 function setInfoWindow (map, marker, poi){
+  var orig = poi.imageSrc();
   var contentString = '<div id="content">'+
-  '<div id="siteNotice">' + '</div>'+
-  '<h1 id="firstHeading" class="firstHeading">' + poi.name() + '</h1>'+
+  '<div><img id="orbot" width="200" height="150" src="' + poi.imageSrc() +'"></div>' +
+  '<div><button class="btn-danger" onclick="getBot()">Orbot... 3 2 1</button>' +
+  //'<button class="btn-success" onclick="getOrig('+ orig +')">Whoa... Undo!!</button>' +
+  '</div>' +
+  '<h4 id="firstHeading" class="firstHeading">' + poi.name() + '</h4>' +
   '<div id="bodyContent">'+
   '<p><b>' + poi.name() + '</b>. ' + poi.snippet() +
   '</div>'+
@@ -106,7 +110,7 @@ function setInfoWindow (map, marker, poi){
   if ( infowindow !== undefined ) infowindow.close();
   infowindow = new google.maps.InfoWindow({
     content: contentString,
-    maxWidth: 200
+    maxWidth: 220
   });
   infowindow.open(map, marker, poi);
 }
@@ -131,6 +135,35 @@ function resetMarkers(){
   // if an open window exists, close it
   if ( infowindow !== undefined ) infowindow.close();
 }
+
+function getBot() {
+  var title = document.getElementById("firstHeading").textContent;
+  var output = $.ajax({
+    url: 'https://robohash.p.mashape.com/index.php?', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
+    type: 'GET', // The HTTP Method, can be GET POST PUT DELETE etc
+    data: 'text=' + title, // Additional parameters here
+    dataType: 'json',
+    success: function(data) {
+     document.querySelector("#orbot").src = data.imageUrl;
+    },
+    error: function(err) { alert(err); },
+    beforeSend: function(xhr) {
+    xhr.setRequestHeader("X-Mashape-Authorization", "VgMGFNmpz7mshANOJu1vyojXxtPSp1EJlqhjsndy1e69V8froV"); // Enter here your Mashape key
+    }
+  });
+}
+
+// I cannot get a reset button to work!
+// uncomment line beg <button class="btn-success" in setInfoWindow
+// get this error message:
+// Uncaught SyntaxError: missing ) after argument list
+// ??? seems to refer to index.html <!DOCTYPE html>
+function getOrig(imageSrc){
+  console.log(imageSrc);
+  document.querySelector("#orbot").src = imageSrc;
+}
+
+
 
 /* ======= ViewModel ======= */
 // ViewModel()
