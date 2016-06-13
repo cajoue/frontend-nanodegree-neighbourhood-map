@@ -6,13 +6,15 @@ var localOrbe = [
   "name": "La Tour Ronde",
   "location": { "lat": 46.725228, "lng": 6.532651 },
   "category": "Historic Site",
+  "fourID": "5749d0d7498eeaadc53d1a94",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/55668009.jpg",
   "snippet": "The Round Tower is part of the town's ancient castle. It offers splendid 360° panoramic views over the town, the Jura mountain range, and the Alps."
 },
 {
   "name": "Quartier des Vieux Moulins",
   "location": { "lat": 46.720926, "lng": 6.532467 },
-  "category": "Historic Site",
+  "category": "Scenic Lookout",
+  "fourID": "575ee4fe498e32bffe3b201f",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/74920455.jpg",
   "snippet": "The ancient flourmills date back to 1423 and were in use until the very end of the 1990s."
 },
@@ -20,20 +22,23 @@ var localOrbe = [
   "name": "Les Gorges de l'Orbe",
   "location": { "lat": 46.727536, "lng": 6.509110 },
   "category": "Trail",
+  "fourID": "4dfdd71ec65b31579b330f40",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/55667745.jpg",
   "snippet": "A walk through the gorges of the River Orbe presents hikers with a wealth of natural resources in the foothills of the Jura Mountains, between Vallorbe and Orbe."
 },
 {
-  "name": "Mosaïques Romaines",
-  "location": { "lat": 46.742346, "lng": 6.535903 },
-  "category": "Historic Site",
-  "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/76864223.jpg",
-  "snippet": "Discovered in the middle of the 19th century, these mosaics paved eight of the 100 rooms in a huge and luxurious Gallo-Roman villa that was built around 160 AD"
+  "name": "Mur d'escalade, Chavornay",
+  "location": { "lat": 46.70769, "lng": 6.566871 },
+  "category": "Climbing Gym",
+  "fourID": "4c74596e1b30a093c380ec09",
+  "imgSrc": "https://irs0.4sqi.net/img/general/width960/315239_vFCt6_0yyQJtH2q7LqH93FKYMI8yZUfNvrpSt1jVvDY.jpg",
+  "snippet": "The climbing wall at Chavornay is divided into five separate zones, including bouldering, children's area and lead walls."
 },
 {
   "name": "Orbe à petits pas",
   "location": { "lat": 46.723168, "lng": 6.529570 },
   "category": "Trail",
+  "fourID": "4f786a52e4b055c7618c157e",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/20468692.jpg",
   "snippet": "Two easy walks, marked with yellow and red steps on the ground, guide you around the town, its surroundings, and the river."
 }
@@ -181,6 +186,28 @@ var ViewModel = function(){
   localOrbe.forEach(function(json){
     self.locationList.push( new Poi(json) );
   });
+
+
+
+//-------------------------------------------------------------
+// FourSquare API
+// https://api.foursquare.com/v2/venues/search
+// https://api.foursquare.com/v2/venues/explore
+// https://api.foursquare.com/v2/venues/VENUE_ID
+//-------------------------------------------------------------
+
+// add detail to hardcoded
+
+// For each poi in locationList, request Foursquare data for the infowindow
+
+  self.locationList().forEach(function (poi) {
+    // make Ajax request
+    $.ajax()
+
+  });
+
+
+
 
   // use first poi in Orbe to test selected place
   self.currentPoi = ko.observable(this.locationList()[0].name());
