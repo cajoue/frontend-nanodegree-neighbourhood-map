@@ -61,8 +61,10 @@ var Poi = function(json){
   self.name = ko.observable(json.name);
   self.location = ko.observable(json.location);
   self.category = ko.observable(json.category);
+  self.fourID = ko.observable(json.fourID);
   self.imageSrc = ko.observable(json.imgSrc);
   self.snippet = ko.observable(json.snippet);
+  self.fourWeb = ko.observable();
   // attach the map marker for this Poi object
   self.mapMarker = new google.maps.Marker({
     position: {lat: self.location().lat, lng: self.location().lng},
@@ -107,7 +109,8 @@ function setInfoWindow (map, marker, poi){
   '</div>' +
   '<h4 id="firstHeading" class="firstHeading">' + poi.name() + '</h4>' +
   '<div id="bodyContent">'+
-  '<p><b>' + poi.name() + '</b>. ' + poi.snippet() +
+  '<p><b>' + poi.name() + '</b>. ' + poi.snippet() + '</p>' +
+  '<p> View on <a href="'+ poi.fourWeb() +'">FourSquare</a></p>' +
   '</div>'+
   '</div>';
 
@@ -200,9 +203,44 @@ var ViewModel = function(){
 
 // For each poi in locationList, request Foursquare data for the infowindow
 
+// example of call to venue_id
+// https://api.foursquare.com/v2/venues/40a55d80f964a52020f31ee3?oauth_token=LOJ2DURA4KDE3HIOZH1TP0NAEP1XGIFLQP0FVAE2LHYFFKLR&v=20160613
+// based on json output want to narrow in on: data.response.venue
+// then drill down to:
+// bestPhoto.prefix bestPhoto.suffix perhaps bestPhoto.id
+// canonicalUrl
+// categories[0].name categories[0].shortName
+// id
+// location.lat location.lng
+// name
+// photos.groups[0].items[n].id  .prefix  .suffix
+// shortUrl
+
+
+    var fourInfo = {
+      CLIENT_ID: '',
+      CLIENT_SECRET: '',
+      OAUTH_TOKEN: '',
+      baseURL: 'https://api.foursquare.com/v2/venues/'
+    };
+
   self.locationList().forEach(function (poi) {
+
     // make Ajax request
-    $.ajax()
+    $.ajax({
+      url: fourInfo.baseURL + poi.fourID(),
+      dataType: 'json',
+      data: 'client_id=' + fourInfo.CLIENT_ID +
+            '&client_secret=' + fourInfo.CLIENT_SECRET +
+            '&v=20160613',
+      success: function(data){
+        console.log(data.response.venue.shortUrl);
+        poi.fourWeb(data.response.venue.shortUrl);
+      },
+      error: function(e){
+        console.log('error')
+      }
+    });
 
   });
 
