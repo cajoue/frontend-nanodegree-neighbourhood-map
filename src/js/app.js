@@ -5,14 +5,14 @@ var localOrbe = [
 {
   "name": "La Tour Ronde",
   "location": { "lat": 46.725228, "lng": 6.532651 },
-  "category": "Historic Interest",
+  "category": "Historic Site",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/55668009.jpg",
   "snippet": "The Round Tower is part of the town's ancient castle. It offers splendid 360° panoramic views over the town, the Jura mountain range, and the Alps."
 },
 {
   "name": "Quartier des Vieux Moulins",
   "location": { "lat": 46.720926, "lng": 6.532467 },
-  "category": "Historic Interest",
+  "category": "Historic Site",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/74920455.jpg",
   "snippet": "The ancient flourmills date back to 1423 and were in use until the very end of the 1990s."
 },
@@ -26,7 +26,7 @@ var localOrbe = [
 {
   "name": "Mosaïques Romaines",
   "location": { "lat": 46.742346, "lng": 6.535903 },
-  "category": "Historic Interest",
+  "category": "Historic Site",
   "imgSrc": "https://static.panoramio.com.storage.googleapis.com/photos/small/76864223.jpg",
   "snippet": "Discovered in the middle of the 19th century, these mosaics paved eight of the 100 rooms in a huge and luxurious Gallo-Roman villa that was built around 160 AD"
 },
