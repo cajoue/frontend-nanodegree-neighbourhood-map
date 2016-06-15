@@ -217,16 +217,15 @@ var ViewModel = function(){
 // shortUrl
 
 
-    var fourInfo = {
+ var fourInfo = {
       CLIENT_ID: '',
       CLIENT_SECRET: '',
       OAUTH_TOKEN: '',
       baseURL: 'https://api.foursquare.com/v2/venues/'
     };
 
-  self.locationList().forEach(function (poi) {
-
-    // make Ajax request
+    // make Ajax request on VENUE_ID to add link supplied by foursquare to each existing poi
+/*  self.locationList().forEach(function (poi) {
     $.ajax({
       url: fourInfo.baseURL + poi.fourID(),
       dataType: 'json',
@@ -241,10 +240,81 @@ var ViewModel = function(){
         console.log('error')
       }
     });
+  });*/
 
+// example of call to explore
+// https://api.foursquare.com/v2/venues/explore?ll=40.7,-74&oauth_token=LOJ2DURA4KDE3HIOZH1TP0NAEP1XGIFLQP0FVAE2LHYFFKLR&v=20160615
+// based on json output want to narrow in on: data.response.groups[0].items
+// then drill down to:
+// venue.id venue.name
+// venue.location.lat venue.location.lng
+// venue.featuredPhotos.items[0].prefix .suffix  .id
+// venue.categories[0].shortName
+// tips[0].canonicalUrl tips[0].text
+
+
+// make ajax request to find coffee locations around Orbe {lat: 46.724258, lng: 6.532064};
+// use resulting json in function to create pois to add to locationlist
+// resulting json is not in an easy to use structure. will try getJSON instead
+// http://sharepoint.stackexchange.com/questions/116955/create-json-data-dynamically-from-list-using-javascript
+  // self.getFourSquarePlaces = function(){
+  //   $.ajax({
+  //     url: fourInfo.baseURL + 'explore',
+  //     dataType: 'json',
+  //     data: 'll=46.724258,6.532064&radius=5000&limit=5&venuePhotos=1' +
+  //           '&section=coffee' +
+  //           '&oauth_token=' + fourInfo.OAUTH_TOKEN +
+  //           '&v=20160615',
+  //     success: function(data){
+  //       console.log(data.response.groups[0].items);
+  //       places = data.response.groups[0].items;
+  //       //poi.fourWeb(data.response.venue.shortUrl);
+  //     },
+  //     error: function(e){
+  //       console.log('error')
+  //     }
+  //   });
+  // };
+  // self.getFourSquarePlaces();
+
+  // resulting json is not in an easy to use structure. will try getJSON instead
+  // http://sharepoint.stackexchange.com/questions/116955/create-json-data-dynamically-from-list-using-javascript
+  // http://stackoverflow.com/questions/1168807/how-can-i-add-a-key-value-pair-to-a-javascript-object
+  // http://stackoverflow.com/questions/8893020/check-if-key-exists-in-json-array-using-jquery
+  // Step 1: Get the results
+  var exploreURL = fourInfo.baseURL +
+                  'explore?ll=46.724258,6.532064&radius=5000&limit=5&venuePhotos=1' +
+                  '&section=coffee' +
+                  '&oauth_token=' + fourInfo.OAUTH_TOKEN +
+                  '&v=20160615';
+  $.getJSON(exploreURL, function(data) {
+      console.log("Returned JSON Data:");
+      console.log(data.response.groups[0].items);
+      var gotJSON = data.response.groups[0].items;
+      console.log(gotJSON.length);
+      // Step 2: Process the results into the form you want
+      var results =[];
+      for (var i = 0; i < gotJSON.length; i++) {
+        var item = {
+          "name": gotJSON[i].venue.name,
+            "location": { "lat": gotJSON[i].venue.location.lat, "lng": gotJSON[i].venue.location.lng },
+            "category": gotJSON[i].venue.categories[0].shortName,
+            "fourID": gotJSON[i].venue.id
+           // "imgSrc": gotJSON[i].venue.featuredPhotos.items[0].prefix + gotJSON[i].venue.featuredPhotos.items[0].suffix
+            //"snippet": gotJSON[i].tips[0].text
+        };
+        if (gotJSON[i].venue.hasOwnProperty('featuredPhotos')){
+          item["imgSrc"] = gotJSON[i].venue.featuredPhotos.items[0].prefix + gotJSON[i].venue.featuredPhotos.items[0].suffix;
+        }
+        if (gotJSON[i].hasOwnProperty('tips')){
+          item["snippet"] = gotJSON[i].tips[0].text;
+        }
+          results.push(item);
+      }
+      // do other work with your results below here
+      console.log("Object created based on the results:");
+      console.log(results);
   });
-
-
 
 
   // use first poi in Orbe to test selected place
