@@ -154,7 +154,7 @@ function getBot() {
     success: function(data) {
      document.querySelector("#orbot").src = data.imageUrl;
     },
-    error: function(err) { alert(err); },
+    error: function(err) { alert("Robot request failed, no robot revolution at this time: \n" + err.statusText); },
     beforeSend: function(xhr) {
     xhr.setRequestHeader("X-Mashape-Authorization", "VgMGFNmpz7mshANOJu1vyojXxtPSp1EJlqhjsndy1e69V8froV"); // Enter here your Mashape key
     }
@@ -287,7 +287,9 @@ var ViewModel = function(){
                   '&section=coffee' +
                   '&oauth_token=' + fourInfo.OAUTH_TOKEN +
                   '&v=20160615';
-  $.getJSON(exploreURL, function(data) {
+
+  $.getJSON(exploreURL)
+    .done(function(data) {
       console.log("Returned JSON Data:");
       console.log(data.response.groups[0].items);
       var gotJSON = data.response.groups[0].items;
@@ -319,7 +321,13 @@ var ViewModel = function(){
       results.forEach(function(json){
         self.locationList.push( new Poi(json) );
       });
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+    var err = textStatus + ", " + error;
+    console.log( "Request Failed: " + err );
+    alert( "Requested FourSquare data failed to load: \n" + err );
   });
+
 
 
   // use first poi in Orbe to test selected place
