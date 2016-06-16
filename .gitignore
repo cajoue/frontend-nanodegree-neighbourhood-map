@@ -6,3 +6,4 @@ test/
 config_settings.json
 dist/
 src/components/
+.publish/

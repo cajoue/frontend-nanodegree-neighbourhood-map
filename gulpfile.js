@@ -188,7 +188,7 @@ gulp.task('deploy', function() {
 });
 
 // gulp default watches main files and serves them to browserSync
-gulp.task('default', ['content', 'scripts', 'styles', 'serve']);
+gulp.task('default', ['styles', 'content', 'scripts', 'serve']);
 
 
 // gulp.task('default', function (){
