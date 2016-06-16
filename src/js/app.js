@@ -110,7 +110,7 @@ function setInfoWindow (map, marker, poi){
   '<h4 id="firstHeading" class="firstHeading">' + poi.name() + '</h4>' +
   '<div id="bodyContent">'+
   '<p><b>' + poi.name() + '</b>. ' + poi.snippet() + '</p>' +
-  '<p> View on <a href="'+ poi.fourWeb() +'">FourSquare</a></p>' +
+//  '<p> View on <a href="'+ poi.fourWeb() +'">FourSquare</a></p>' +
   '</div>'+
   '</div>';
 
@@ -300,20 +300,25 @@ var ViewModel = function(){
             "location": { "lat": gotJSON[i].venue.location.lat, "lng": gotJSON[i].venue.location.lng },
             "category": gotJSON[i].venue.categories[0].shortName,
             "fourID": gotJSON[i].venue.id
-           // "imgSrc": gotJSON[i].venue.featuredPhotos.items[0].prefix + gotJSON[i].venue.featuredPhotos.items[0].suffix
-            //"snippet": gotJSON[i].tips[0].text
         };
         if (gotJSON[i].venue.hasOwnProperty('featuredPhotos')){
-          item["imgSrc"] = gotJSON[i].venue.featuredPhotos.items[0].prefix + gotJSON[i].venue.featuredPhotos.items[0].suffix;
+          item["imgSrc"] = gotJSON[i].venue.featuredPhotos.items[0].prefix + '200x150' + gotJSON[i].venue.featuredPhotos.items[0].suffix;
+        } else {
+          item["imgSrc"] = "http://placehold.it/200x150?text=" + gotJSON[i].venue.categories[0].shortName;
         }
         if (gotJSON[i].hasOwnProperty('tips')){
           item["snippet"] = gotJSON[i].tips[0].text;
+        } else {
+          item["snippet"] = "No reviews yet...";
         }
           results.push(item);
       }
       // do other work with your results below here
       console.log("Object created based on the results:");
       console.log(results);
+      results.forEach(function(json){
+        self.locationList.push( new Poi(json) );
+      });
   });
 
 
