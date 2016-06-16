@@ -1,8 +1,0 @@
-.DS_Store
-node_modules/
-bower_components/
-notes.md
-test/
-config_settings.json
-dist/
-src/components/
