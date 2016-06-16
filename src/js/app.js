@@ -64,7 +64,7 @@ var Poi = function(json){
   self.fourID = ko.observable(json.fourID);
   self.imageSrc = ko.observable(json.imgSrc);
   self.snippet = ko.observable(json.snippet);
-  self.fourWeb = ko.observable();
+  self.fourWeb = ko.observable(json.fourWeb);
   // attach the map marker for this Poi object
   self.mapMarker = new google.maps.Marker({
     position: {lat: self.location().lat, lng: self.location().lng},
@@ -104,13 +104,14 @@ function setInfoWindow (map, marker, poi){
   var orig = poi.imageSrc();
   var contentString = '<div id="content">'+
   '<div><img id="orbot" width="200" height="150" src="' + poi.imageSrc() +'"></div>' +
-  '<div><button class="btn-danger" onclick="getBot()">Orbot... 3 2 1</button>' +
+  '<div class="orbot"><button class="btn-danger" onclick="getBot()">Orbot... 3 2 1</button>' +
+  '<p id="attributeRobot"></p>' +
   //'<button class="btn-success" onclick="getOrig('+ orig +')">Whoa... Undo!!</button>' +
   '</div>' +
   '<h4 id="firstHeading" class="firstHeading">' + poi.name() + '</h4>' +
   '<div id="bodyContent">'+
   '<p><b>' + poi.name() + '</b>. ' + poi.snippet() + '</p>' +
-//  '<p> View on <a href="'+ poi.fourWeb() +'">FourSquare</a></p>' +
+  '<p> View on <a href="'+ poi.fourWeb() +'" target="_blank">FourSquare</a></p>' +
   '</div>'+
   '</div>';
 
@@ -153,8 +154,9 @@ function getBot() {
     dataType: 'json',
     success: function(data) {
      document.querySelector("#orbot").src = data.imageUrl;
+     document.querySelector("#attributeRobot").innerHTML = "Friendly robot by Robohash.org";
     },
-    error: function(err) { alert("Robot request failed, no robot revolution at this time: \n" + err.statusText); },
+    error: function(err) { alert("Does not compute, no robot rampages at this time: \n" + err.statusText); },
     beforeSend: function(xhr) {
     xhr.setRequestHeader("X-Mashape-Authorization", "VgMGFNmpz7mshANOJu1vyojXxtPSp1EJlqhjsndy1e69V8froV"); // Enter here your Mashape key
     }
@@ -216,21 +218,17 @@ var ViewModel = function(){
 // photos.groups[0].items[n].id  .prefix  .suffix
 // shortUrl
 
-
- var fourInfo = {
-      CLIENT_ID: '',
-      CLIENT_SECRET: '',
-      OAUTH_TOKEN: '',
+    var fourInfo = {
+      OAUTH_TOKEN: 'LOJ2DURA4KDE3HIOZH1TP0NAEP1XGIFLQP0FVAE2LHYFFKLR',
       baseURL: 'https://api.foursquare.com/v2/venues/'
     };
 
     // make Ajax request on VENUE_ID to add link supplied by foursquare to each existing poi
-/*  self.locationList().forEach(function (poi) {
+  self.locationList().forEach(function (poi) {
     $.ajax({
       url: fourInfo.baseURL + poi.fourID(),
       dataType: 'json',
-      data: 'client_id=' + fourInfo.CLIENT_ID +
-            '&client_secret=' + fourInfo.CLIENT_SECRET +
+      data: 'oauth_token=' + fourInfo.OAUTH_TOKEN +
             '&v=20160613',
       success: function(data){
         console.log(data.response.venue.shortUrl);
@@ -240,7 +238,7 @@ var ViewModel = function(){
         console.log('error')
       }
     });
-  });*/
+  });
 
 // example of call to explore
 // https://api.foursquare.com/v2/venues/explore?ll=40.7,-74&oauth_token=LOJ2DURA4KDE3HIOZH1TP0NAEP1XGIFLQP0FVAE2LHYFFKLR&v=20160615
@@ -285,6 +283,7 @@ var ViewModel = function(){
   var exploreURL = fourInfo.baseURL +
                   'explore?ll=46.724258,6.532064&radius=5000&limit=5&venuePhotos=1' +
                   '&section=coffee' +
+                  '&mode=url' +
                   '&oauth_token=' + fourInfo.OAUTH_TOKEN +
                   '&v=20160615';
 
@@ -301,7 +300,8 @@ var ViewModel = function(){
           "name": gotJSON[i].venue.name,
             "location": { "lat": gotJSON[i].venue.location.lat, "lng": gotJSON[i].venue.location.lng },
             "category": gotJSON[i].venue.categories[0].shortName,
-            "fourID": gotJSON[i].venue.id
+            "fourID": gotJSON[i].venue.id,
+            "fourWeb": "https://foursquare.com/v/" + gotJSON[i].venue.id
         };
         if (gotJSON[i].venue.hasOwnProperty('featuredPhotos')){
           item["imgSrc"] = gotJSON[i].venue.featuredPhotos.items[0].prefix + '200x150' + gotJSON[i].venue.featuredPhotos.items[0].suffix;
@@ -314,6 +314,7 @@ var ViewModel = function(){
           item["snippet"] = "No reviews yet...";
         }
           results.push(item);
+          console.log(item.fourWeb);
       }
       // do other work with your results below here
       console.log("Object created based on the results:");

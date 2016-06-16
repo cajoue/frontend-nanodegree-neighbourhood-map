@@ -57,6 +57,10 @@ a.list-group-item:focus {
   margin: 10px 5px 0 0;
 }
 
+.orbot p {
+  margin-top: 10px;
+}
+
 /* OFF CANVAS
 ----------------------------------*/
 
