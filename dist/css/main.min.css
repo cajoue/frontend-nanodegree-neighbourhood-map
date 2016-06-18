@@ -1,1 +1,98 @@
-.map,.map-canvas,body,html{height:100%}body,html{overflow-x:hidden}body{color:#aaa;background:#343434;padding:50px 0 0}ul{padding:10px;background:rgba(0,0,0,.5);list-style-type:none}li{padding:0 10px}footer{padding:30px 0}.map-canvas{border-radius:5px}a.list-group-item:focus{background-color:#f4b400}.btn-danger,.btn-success{margin:10px 5px 0 0}.orbot p{margin-top:10px}.navbar-toggle{float:left;margin-left:15px}@media (min-width:0){.navbar-toggle{display:block}}@media (max-width:768px){.navbar-offcanvas,.navmenu{width:200px;height:auto;border-style:solid;border-width:1px;border-radius:4px}}@media (min-width:992px){body{padding:0}.navbar{right:auto;background:0 0;border:none}}
+/* testing - draws a border around each block */
+/** {
+    border: 1px solid red !important;
+}*/
+
+/* STYLES
+----------------------------------*/
+
+/* all map containers must be full height for map to show */
+html, body, .map {
+  height: 100%;
+}
+
+/* Prevent scroll on narrow devices */
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  color: #aaaaaa;
+  background: #343434;
+  padding: 50px 0 0 0;
+  /*font-family: 'Roboto', sans-serif;*/
+}
+
+/* overwrite default padding, remove bullets */
+/* make background black */
+ul {
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  list-style-type: none;
+}
+
+li {
+  padding: 0px 10px 0px 10px;
+}
+
+footer {
+  padding: 30px 0;
+}
+
+.map-canvas {
+  height: 100%;
+  border-radius: 5px;
+}
+
+a.list-group-item:focus {
+  background-color: #f4b400;
+}
+
+.btn-danger,
+.btn-success {
+  margin: 10px 5px 0 0;
+}
+
+.orbot p {
+  margin-top: 10px;
+}
+
+/* OFF CANVAS
+----------------------------------*/
+
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
+
+@media (min-width: 0) {
+  .navbar-toggle {
+    display: block;
+ /* force showing the toggle */
+  }
+}
+
+/* override jasny to make nav list narrower */
+@media (max-width: 768px) {
+  .navmenu,
+  .navbar-offcanvas {
+    width: 200px;
+    height: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 0;
+  }
+
+  .navbar {
+    right: auto;
+    background: none;
+    border: none;
+  }
+}

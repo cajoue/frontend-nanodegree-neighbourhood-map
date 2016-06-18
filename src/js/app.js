@@ -1,6 +1,7 @@
 /* ======= Model ======= */
 // json data for places in Orbe
 /* ======= ===== ======= */
+
 var localOrbe = [{
   "name": "La Tour Ronde",
   "location": {
@@ -107,7 +108,7 @@ var Poi = function(json) {
 // simple map example from google api
 var map;
 var initMap = function() {
-  const ORBE = {
+  var ORBE = {
     lat: 46.724258,
     lng: 6.532064
   };
