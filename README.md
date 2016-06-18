@@ -24,14 +24,70 @@ View online here: http://cajoue.github.io/frontend-nanodegree-neighbourhood-map/
 * Orbots are for fun and use the [Robohash API](https://market.mashape.com/blaazetech/robohash-image-generator)
 * CSS uses the [Bootstrap](http://getbootstrap.com/css/) and [Jasny libraries](http://www.jasny.net/bootstrap/)
 
+
 ## Project Setup & Installation
-Clone or download the project here on github
-I used [Bower](https://bower.io/) and [Gulp](http://gulpjs.com/) in my workflow
+
+### Get the git
+
+ - Fork, clone or download the project here on github. Use git to clone
+   the repository to your local system 
+ - open terminal 
+ - Navigate to the    parent directory in which you intend to install
+   the project
+ - `$ git clone https://github.com/cajoue/frontend-nanodegree-neighbourhood-map.git`
+
+This will create, and install files to, the project directory **frontend-nanodegree-neighbourhood-map** 
+
+### Project Build
+I used [npm](https://nodejs.org/en/), [bower](https://bower.io/) and [gulp](http://gulpjs.com/) in my workflow
 Bower to install and update dependencies
 Gulp to automate, lint and minify files for distribution 
 All original working files are in the **src** directory
-All minified and optimised files are in the **dist** directory
+All minified and optimised files are in the **dist** directory once built
 
+**Required**:  npm (part of nodeJs), gulp and bower
+If not already on your system you will need to download and install them, using Terminal (on mac)
+
+- Instructions for [Installing Node.js and updating npm](https://docs.npmjs.com/getting-started/installing-node)
+
+- Install Bower
+`$ npm install -g bower`
+
+- Install Gulp
+`$ npm install -g gulp`
+
+
+#### Install Dependencies
+
+In the Terminal, in the root of the project directory (*frontend-nanodegree-neighbourhood-map*)
+
+- `$ bower install`
+installs the project dependencies listed in bower.json
+
+- `$ npm install `
+installs the required node-modules for gulp
+listed as dependencies in package.json (includes gulp)
+
+#### Working with Gulp
+- `$ gulp build` 
+to clear dist directory if it exists and rebuild from scratch from files in the src directory and bower components.
+
+- `$ gulp`
+gulp default task. This launches a preview of the actual development build located in the dist/ directory. Files in the src/ directory are watched, if any changes are made gulp tasks are run and the app is automatically updated in the browser. The stream is dependent on browser-sync. 
+
+### Run on local Server
+- open terminal
+- Navigate to the root of the project directory 
+- `$ python -m SimpleHTTPServer 8080 `
+to run on port 8080 
+
+- open browser (http://localhost:8080/)
+- Navigate to:
+**/src/index.html** 
+to open the source docs (working files before optimisation - easier to view, edit, or debug the code)
+- or:
+**/dist/index.html** 
+to open the distribution application (optimised files for production use)
 
 ## APIs
 * [Google Maps](https://developers.google.com/maps/documentation/javascript/) 
@@ -81,6 +137,17 @@ https://css-tricks.com/gulp-for-beginners/
 
 https://github.com/jonkemp/gulp-useref/issues/1
 
+https://discussions.udacity.com/t/project-rejected-problem-with-gulpfile-tasks-not-working-consistently/173761
+
+https://www.browsersync.io/docs/gulp/
+
+http://stackoverflow.com/questions/32017406/gulp-sass-and-browser-sync-dont-reload-browser/32017530#32017530
+
+https://css-tricks.com/gulp-for-beginners/
+
+https://github.com/zellwk/gulp-starter-csstricks/blob/master/gulpfile.js
+
+
 ### JavaScript
 [JavaScript String indexOf() Method](http://www.w3schools.com/jsref/jsref_indexof.asp)
 
@@ -94,3 +161,6 @@ https://github.com/jonkemp/gulp-useref/issues/1
 [Live search with knockout.js](http://jsfiddle.net/mythical/XJEzc/)
 
 [Toggle CSS class Knockoutjs - JSFiddle](http://jsfiddle.net/sgentile/pRC4c/)
+
+### Thank yous
+To the generous people on the forums for their thoughtful and helpful advice - my last reviewer too!
