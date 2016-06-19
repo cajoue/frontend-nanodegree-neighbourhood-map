@@ -180,8 +180,8 @@ function getBot() {
     data: 'text=' + title, // Additional parameters here
     dataType: 'json',
     success: function(data) {
-      document.querySelector("#orbot").src = data.imageUrl;
-      document.querySelector("#attributeRobot").innerHTML = "Friendly robot by Robohash.org";
+      document.getElementById("orbot").src = data.imageUrl;
+      document.getElementById("attributeRobot").innerHTML = "Friendly robot by Robohash.org";
     },
     error: function(err) {
       alert("Does not compute, no robot rampages at this time: \n" + err.statusText);
